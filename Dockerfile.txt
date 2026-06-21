@@ -1,0 +1,33 @@
+O Padrão Universal de um Dockerfile (As 4 Etapas)
+
+1. A Base (FROM) — Onde meu código vai rodar?Toda imagem precisa de um sistema operacional e da linguagem já instalados. 
+Você nunca começa do zero absoluto.
+O padrão: Use sempre as imagens oficiais do Docker Hub e prefira as versões -slim ou -alpine (que são muito mais leves e seguras).
+
+Exemplo: 
+FROM python:3.11-slim2. 
+
+2. O Ambiente (WORKDIR e ENV) — Onde os arquivos vão ficar?
+Você precisa criar uma pasta dentro do contêiner para não misturar seus arquivos com os arquivos do sistema operacional.
+O padrão: Definir variáveis de ambiente úteis e criar uma pasta chamada /app.
+
+Exemplo:
+ENV PYTHONUNBUFFERED=1 
+WORKDIR /app
+
+3. As Dependências e o Código (COPY e RUN) — O que meu código precisa?
+Aqui você leva os arquivos do seu computador para dentro do contêiner e instala as ferramentas.
+O padrão (Truque de Performance): Primeiro você copia apenas o arquivo de dependências (como o requirements.txt) e roda a instalação. 
+Só depois você copia o resto do código. Isso faz o Docker economizar tempo nos próximos builds (mecanismo de cache).
+
+Exemplo:
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+
+4. A Saída (EXPOSE e CMD) — Como a aplicação inicia?
+Você avisa por qual "porta" o contêiner vai conversar com o mundo e qual comando deve ser executado para ligar o servidor.
+O padrão: O comando CMD deve ser escrito em formato de lista (JSON).
+Exemplo:
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
