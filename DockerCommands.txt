@@ -1,0 +1,64 @@
+Baixar imagens Docker Hub:
+- docker pull ubuntu
+- docker pull nginx
+- docker pull postgres
+...
+
+Imagens existentes:
+- docker images
+
+Container criado e executado:
+- docker run ubuntu
+
+Containers em execução:
+- docker ps
+
+* -a mostra todos os containers inclusive os parados
+
+Container parar:
+- docker stop <id>
+
+Container iniciar novamente:
+- docker start <id>
+
+Container remove:
+- docker rm <id>
+
+Entrar em Container já rodando:
+- docker exec -it <id> bash
+
+Imagem remove:
+- docker rmi <image-id/name>
+
+Logs:
+- docker logs <id>
+
+Flags:
+
+-i  (docker run -i ubuntu)
+Mantém entrada aberta. Permitindo digitar coisas
+
+-t (docker run -t ubuntu)
+Cria terminal para iteração
+
+-it (docker run -it ubuntu bash)
+-i e -t juntas. Criando um terminal iterativo dentro do container
+
+-d (docker run -d nginx)
+Executa em background
+
+-p (docker run -p 8080:80 nginx)
+Port Mapping. Formato HOST:CONTAINER
+
+--name (docker run --name meu-nginx nginx)
+Dá um nome para o conteiner, depois pode rodar seu precisar do ID
+
+--rm (docker run --rm ubuntu)
+Remove automaticamente quando terminar
+
+-e (docker run -e MYSQL_ROOT_PASSWORD=123 postgres)
+Variável de ambiente
+
+-v (docker run -v C:\dados:/app/dados ubuntu)
+Volume. Conecta pasta do computador ao container.
+
